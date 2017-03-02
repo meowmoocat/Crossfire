@@ -8,7 +8,7 @@ struct Slots
   int place;
 	char type[10];
 	char player;
-	int  player variable??		//good idea to have a slot variable in the player struct
+	
 };
 
 struct Players
@@ -22,13 +22,12 @@ struct Players
    int	 Smartness;
    int	 LifePoints;
    int	 Place;
-   int   life points
-   int   place variable
+   int   Lifepoints;
 };
 
 void type(struct Players *Player);
 void stat(struct Players *Player);
-void attack(struct Player *Playera, struct Player *Playerb);
+void attack(struct Players *Playera, struct Players *Playerb);
 void selectNumSlots(int *slot_noPtr, int PlayerNumber);
 void assignSlots(struct Slots *slot, int i);
 void assignPlace(struct Players Player, struct Slots slot, int PlayerNumber, int SlotNumber);
@@ -129,11 +128,6 @@ while(j<PlayerNum)
 	printf("\n");
 	j=j+1;
 }
-/* 
-printf(" Player ones strength is: %d \n", Player1.Strength);
-printf(" Player twos smartness is: %s \n", Player2.Smartness);
-printf(" Player 4s dex is: %d \n", Player4.Dexterity);
- */
 	selectNumSlots(&slot_no, PlayerNum);		// sending the choice to a function so that if they pick something outside the boundries the function can just be called again
 	
 	for(i=0; i<2; i++)
@@ -393,19 +387,21 @@ void assignSlots(struct Slots *slot, int i)
 	
 	return;
 }
-void attack(struct Player *Playera, struct *Playerb);
+
+
+void attack(struct Players *Playera, struct Players *Playerb)
 {
 		if(Playerb->Strength>70)
 		{
-			Playbera->LifePoints=Playera->LifePoints - 0.3*Playerb->Strength;
+			Playera->LifePoints=Playera->LifePoints - 0.3*Playerb->Strength;
 		}
 		else if(Playerb->Strength<=70)
 		{
-			Playberb->LifePoints=Playerb->LifePoints - 0.5*Playera->Strength;
+			Playerb->LifePoints=Playerb->LifePoints - 0.5*Playera->Strength;
 		}
 }
 
-void assignPlace(struct Players Player, struct Slots slot, int PlayerNumber, int SlotNumber)
+/*void assignPlace(struct Players Player, struct Slots slot, int PlayerNumber, int SlotNumber)
 {
 	
 	/*
@@ -416,7 +412,7 @@ void assignPlace(struct Players Player, struct Slots slot, int PlayerNumber, int
 	match these numbers to the slots and place player name in
 	*/
 	
-}
+//}
 
 //move or attack
 
