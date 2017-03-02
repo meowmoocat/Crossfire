@@ -33,28 +33,30 @@ void attack(struct Players *Playera, struct Players *Playerb);				//attack funct
 int main(void)
 {
 	srand(time(NULL));
-	int PlayerNum, j=1;
+	int PlayerNum, j;
 	struct Players Player[6];	
 	int slot_no, i, random, temp;
 	struct Slots slot[20];
-	char Name[25];
 
 	printf("Enter the number of players you want:"); //gives number of players
 	scanf("%d", &PlayerNum);
-	while(j<=PlayerNum)
+	getchar();
+	
+	printf("\nplayer number is %d\n", PlayerNum);
+	temp=PlayerNum;
+	for(j=1; j<=temp; j++)
 	{
-		printf("Enter player name: ");
-		scanf("%s", &Name);
-		strcpy(Player[j].Name, Name);
+		printf("\n\nEnter player name: ");
+		scanf("%s", &Player[j].Name);
 		getchar();
-		printf( "Player %d: %s\n", j, Player[j].Name);
+		printf("\n%d\n", PlayerNum);
+		//this is messing up for some reason, a random number is getting assigned to PlayerNum 
 		type(&Player[j]);
-		stat(&Player[j]);	
+		stat(&Player[j]);
 		printf( "\nPlayer [%d]: %s\nPlayer Type: %s\nStrength: %d\nMagic: %d\nDexterity: %d\nLuck: %d\nSmartness: %d\n", j, Player[j].Name, Player[j].Race, Player[j].Strength, Player[j].MagicSkills, Player[j].Dexterity, Player[j].Luck, Player[j].Smartness);
-
-		j=j+1;
 	}
-
+	PlayerNum=temp;
+	printf("\n%d\n", PlayerNum);
 	selectNumSlots(&slot_no, PlayerNum);		//function for calling selecting amount of slots
 	for(i=0; i<2; i++)
 	{		//checks conditions for slots size
@@ -72,58 +74,30 @@ int main(void)
 		assignSlots(&slot[i], i);
 		printf("%d: %s\n", slot[i].place, slot[i].type);
 	}
-	printf("%d: %s\n", slot[20].place, slot[20].type);
-	for(i=1; i<=PlayerNum; i++)
+	
+	
+	for(i=1; i<=PlayerNum; i++)			//places players on slots
 	{
 		random=1+rand()%slot_no;
-		printf("\nj=%d\n", random);
 		if(i==1)
 		{
 			Player[i].Place = random;
 		}
-		if(i==2)
+		for(j=1; j<i; j++)
 		{
 			Player[i].Place = random;
-			if(Player[i].Place==Player[i-1].Place)
+			if(Player[i].Place==Player[j].Place)
 			{
 				i--;
+				break;
 			}
 		}
-		if(i==3)
-		{
-			Player[i].Place = random;
-			if(Player[i].Place==Player[i-2].Place || Player[i].Place==Player[i-1].Place)
-			{
-				i--;
-			}
-		}
-		if(i==4)
-		{
-			Player[i].Place = random;
-			if(Player[i].Place==Player[i].Place || Player[i].Place==Player[i].Place || Player[i].Place==Player[i].Place)
-			{
-				i--;
-			}
-		}
-		if(i==5)
-		{
-			Player[i].Place = random;
-			if(Player[i].Place==Player[i].Place || Player[i].Place==Player[i].Place || Player[i].Place==Player[i].Place || Player[i].Place==Player[i].Place)
-			{
-				i--;
-			}
-		}
-		if(i==6)
-		{
-			Player[i].Place = random;
-			if(Player[i].Place==Player[i-5].Place || Player[i].Place==Player[i-4].Place || Player[i].Place==Player[i-3].Place || Player[i].Place==Player[i-2].Place || Player[i].Place==Player[i-1].Place)
-			{
-				i--;
-			}
-		}
+	}
+	
+	for(i=1; i<=PlayerNum; i++)
+	{
 		printf("\n\nPlace P%d: %d\n", i, Player[i].Place);		//test if it's repeating
 	}
-//	printf("\n\nPlace P1: %d\n", Player[i].Place);		//test if it's repeating
 	
 	
 	
@@ -139,6 +113,7 @@ void type(struct Players *Player) //player type function
 	printf("Enter W for Wizard, O for Ogre, E for Elf or H for Human: \n");
 	scanf("%c", &cho);
 	getchar();
+	
 	printf("\n%c\n", cho);
 	
 	//while loop? for if they didn't choose right
@@ -230,7 +205,6 @@ void selectNumSlots(int *slot_noPtr, int PlayerNumber)	//function to select the 
 	printf("Select the amount of slots in the game\nThis number must be between %d and 20: ", PlayerNumber);
 	scanf("%d", &*slot_noPtr);
 	getchar();
-
 	return;
 }
 
