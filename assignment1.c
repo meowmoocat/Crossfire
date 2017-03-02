@@ -43,8 +43,9 @@ int main(void)
 	struct Players Player5; */
 	
 	int slot_no, i, random, temp;
-	struct Slots slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10;
-	struct Slots slot11, slot12, slot13, slot14, slot15, slot16, slot17, slot18, slot19, slot20;
+	struct Slots slot[20];
+//	struct Slots slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10;
+//	struct Slots slot11, slot12, slot13, slot14, slot15, slot16, slot17, slot18, slot19, slot20;
 	char Name[25];
 
 	printf("Enter the number of players you want:"); //gives number of players
@@ -124,125 +125,8 @@ int main(void)
 	//calls function for placing random types on slots
 	for(i=1; i<=slot_no; i++)
 	{
-		if(i==1)
-		{
-			assignSlots( &slot1, i);
-			printf( "%d: %s\n", slot1.place, slot1.type);		//could delete the print statements
-		}
-		
-		else if(i==2)
-		{
-			assignSlots( &slot2, i);
-			printf( "%d: %s\n", slot2.place, slot2.type);
-		}
-		
-		else if(i==3)
-		{
-			assignSlots( &slot3, i);
-			printf( "%d: %s\n", slot3.place, slot3.type);
-		}
-		
-		else if(i==4)
-		{
-			assignSlots( &slot4, i);
-			printf( "%d: %s\n", slot4.place, slot4.type);
-		}
-		
-		else if(i==5)
-		{
-			assignSlots( &slot5, i);
-			printf( "%d: %s\n", slot5.place, slot5.type);
-		}
-		
-		else if(i==6)
-		{
-			assignSlots( &slot6, i);
-			printf( "%d: %s\n", slot6.place, slot6.type);
-		}
-		
-		else if(i==7)
-		{
-			assignSlots( &slot7, i);
-			printf( "%d: %s\n", slot7.place, slot7.type);
-		}
-		
-		else if(i==8)
-		{
-			assignSlots( &slot8, i);
-			printf( "%d: %s\n", slot8.place, slot8.type);
-		}
-		
-		else if(i==9)
-		{
-			assignSlots( &slot9, i);
-			printf( "%d: %s\n", slot9.place, slot9.type);
-		}
-		
-		else if(i==10)
-		{
-			assignSlots( &slot10, i);
-			printf( "%d: %s\n", slot10.place, slot10.type);
-		}
-		
-		else if(i==11)
-		{
-			assignSlots( &slot11, i);
-			printf( "%d: %s\n", slot11.place, slot11.type);
-		}
-		
-		else if(i==12)
-		{
-			assignSlots( &slot12, i);
-			printf( "%d: %s\n", slot12.place, slot12.type);
-		}
-		
-		else if(i==13)
-		{
-			assignSlots( &slot13, i);
-			printf( "%d: %s\n", slot13.place, slot13.type);
-		}
-		
-		else if(i==14)
-		{
-			assignSlots( &slot14, i);
-			printf("%d: %s\n", slot14.place, slot14.type);
-		}
-		
-		else if(i==15)
-		{
-			assignSlots( &slot15, i);
-			printf("%d: %s\n", slot15.place, slot15.type);
-		}
-		
-		else if(i==16)
-		{
-			assignSlots( &slot16, i);
-			printf("%d: %s\n", slot16.place, slot16.type);
-		}
-		
-		else if(i==17)
-		{
-			assignSlots( &slot17, i);
-			printf("%d: %s\n", slot17.place, slot17.type);
-		}
-		
-		else if(i==18)
-		{
-			assignSlots( &slot18, i);
-			printf("%d: %s\n", slot18.place, slot18.type);
-		}
-		
-		else if(i==19)
-		{
-			assignSlots( &slot19, i);
-			printf("%d: %s\n", slot19.place, slot19.type);
-		}
-		
-		else if(i==20)
-		{
-			assignSlots( &slot20, i);
-			printf("%d: %s\n", slot20.place, slot20.type);
-		}
+		assignSlots(&slot[i], i);
+		printf("%d: %s\n", slot[i].place, slot[i].type);
 	}
 	
 	for(i=1; i<=PlayerNum; i++)
