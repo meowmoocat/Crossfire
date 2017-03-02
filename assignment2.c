@@ -5,17 +5,10 @@
 
 struct Slots
 {
-<<<<<<< HEAD
-	int place;
-	char type[10];
-	char player;
-	//player variable??		//good idea to have a slot variable in the player struct
-=======
   int place;
 	char type[10];
 	char player;
 	
->>>>>>> 1136904056a87a83925770724532ca5f84fb413e
 };
 
 struct Players
@@ -29,20 +22,12 @@ struct Players
    int	 Smartness;
    int	 LifePoints;
    int	 Place;
-<<<<<<< HEAD
-   // life points
-   // place variable
-=======
    int   Lifepoints;
->>>>>>> 1136904056a87a83925770724532ca5f84fb413e
 };
 
 void type(struct Players *Player);
 void stat(struct Players *Player);
-<<<<<<< HEAD
-=======
 void attack(struct Players *Playera, struct Players *Playerb);
->>>>>>> 1136904056a87a83925770724532ca5f84fb413e
 void selectNumSlots(int *slot_noPtr, int PlayerNumber);
 void assignSlots(struct Slots *slot, int i);
 void assignPlace(struct Players Player, struct Slots slot, int PlayerNumber, int SlotNumber);
@@ -143,14 +128,6 @@ while(j<PlayerNum)
 	printf("\n");
 	j=j+1;
 }
-<<<<<<< HEAD
-/* 
-printf(" Player ones strength is: %d \n", Player1.Strength);
-printf(" Player twos smartness is: %s \n", Player2.Smartness);
-printf(" Player 4s dex is: %d \n", Player4.Dexterity);
- */
-=======
->>>>>>> 1136904056a87a83925770724532ca5f84fb413e
 	selectNumSlots(&slot_no, PlayerNum);		// sending the choice to a function so that if they pick something outside the boundries the function can just be called again
 	
 	for(i=0; i<2; i++)
@@ -330,17 +307,6 @@ void stat(struct Players *Player)
 
 	if(strcmp(Player->Race, "Ogre")==0)
 	{
-<<<<<<< HEAD
-		Player->Strength= 80+rand()%20;
-		Player->MagicSkills= 0;
-		Player->Dexterity= 80+rand()%20;
-		Player->Luck= rand()%30;				//?? not on file
-		Player->Smartness= rand()%20;
-		while(Player->Luck+Player->Smartness>=50)
-		{
-			
-			Player->Luck= rand()%30;
-=======
 		Player->Strength= 80+rand()%21;
 		Player->MagicSkills= 0;
 		Player->Dexterity= 80+rand()%20;
@@ -350,27 +316,12 @@ void stat(struct Players *Player)
 		{
 			
 			Player->Luck= rand()%50;
->>>>>>> 1136904056a87a83925770724532ca5f84fb413e
 			Player->Smartness= rand()%20;
 		}
 	}
 	
 	if(strcmp(Player->Race, "Human")==0)
 	{
-<<<<<<< HEAD
-		Player->Strength= 1+rand()%99;
-		Player->MagicSkills= 1+rand()%99;
-		Player->Dexterity= 1+rand()%99;
-		Player->Luck= 1+rand()%99;
-		Player->Smartness= 1+rand()%99;
-		while(Player->Strength+Player->Dexterity+Player->MagicSkills+Player->Luck+Player->Smartness >=300)
-		{
-			Player->Strength= 1+rand()%99;
-			Player->MagicSkills= 1+rand()%99;
-			Player->Dexterity= 1+rand()%99;
-			Player->Luck= 1+rand()%99;
-			Player->Smartness= 1+rand()%99;
-=======
 		Player->Strength= 1+rand()%100;
 		Player->MagicSkills= 1+rand()%100;
 		Player->Dexterity= 1+rand()%100;
@@ -383,42 +334,25 @@ void stat(struct Players *Player)
 			Player->Dexterity= 1+rand()%100;
 			Player->Luck= 1+rand()%100;
 			Player->Smartness= 1+rand()%100;
->>>>>>> 1136904056a87a83925770724532ca5f84fb413e
 		}
 	}
 	
 	if(strcmp(Player->Race, "Elf")==0)
 	{
-<<<<<<< HEAD
-		Player->Strength= 1+rand()%49;		//change
-		Player->MagicSkills=51+rand()%29; //does this include 50?
-		Player->Dexterity= 1+rand()%99;			//?? not on file
-		Player->Luck= 60+rand()%40;
-		Player->Smartness= 70+rand()%30;
-=======
 		Player->Strength= 1+rand()%50;		
 		Player->MagicSkills=51+rand()%30; 
 		Player->Dexterity= 1+rand()%100;			
 		Player->Luck= 60+rand()%40;
 		Player->Smartness= 70+rand()%31;
->>>>>>> 1136904056a87a83925770724532ca5f84fb413e
 	}
 	
 	if(strcmp(Player->Race, "Wizard")==0)
 	{
-<<<<<<< HEAD
-		Player->Strength= 1+rand()%19; //needed to change
-		Player->MagicSkills= 80+rand()%20;
-		Player->Dexterity= 1+rand()%99;			//?? not on file
-		Player->Luck= 50+rand()%50;
-		Player->Smartness= 90+rand()%10;
-=======
 		Player->Strength= 1+rand()%20; //needed to change
 		Player->MagicSkills= 80+rand()%21;
 		Player->Dexterity= 1+rand()%100;			//?? not on file
 		Player->Luck= 50+rand()%51;
 		Player->Smartness= 90+rand()%11;
->>>>>>> 1136904056a87a83925770724532ca5f84fb413e
 	}
 	
 	return;
@@ -454,9 +388,6 @@ void assignSlots(struct Slots *slot, int i)
 	return;
 }
 
-<<<<<<< HEAD
-void assignPlace(struct Players Player, struct Slots slot, int PlayerNumber, int SlotNumber)
-=======
 
 void attack(struct Players *Playera, struct Players *Playerb)
 {
@@ -471,7 +402,6 @@ void attack(struct Players *Playera, struct Players *Playerb)
 }
 
 /*void assignPlace(struct Players Player, struct Slots slot, int PlayerNumber, int SlotNumber)
->>>>>>> 1136904056a87a83925770724532ca5f84fb413e
 {
 	
 	/*
@@ -482,11 +412,7 @@ void attack(struct Players *Playera, struct Players *Playerb)
 	match these numbers to the slots and place player name in
 	*/
 	
-<<<<<<< HEAD
-}
-=======
 //}
->>>>>>> 1136904056a87a83925770724532ca5f84fb413e
 
 //move or attack
 
