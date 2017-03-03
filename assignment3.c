@@ -8,7 +8,7 @@ struct Slots
 	int place;
 	char type[10];
 	char player;
-	};
+};
 
 struct Players
 {
@@ -27,14 +27,17 @@ void type(struct Players *Player);		//give player a type
 void stat(struct Players *Player);		//give player stats
 void selectNumSlots(int *slot_noPtr, int PlayerNumber);		//select number of slots
 void assignSlots(struct Slots *slot, int i);				//put ground type on slots
+void boost(struct Players *Player, struct Slots *slot); // Changes players stats depending on the type of slot they are on
 void attack(struct Players *Playera, struct Players *Playerb);				//attack function
-void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, int SlotNumber, int *i);	//place players on slots
+void move(struct Players *Player, int x, int num);
+void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, int SlotNumber);	//place players on slots
 
 int main(void)
 {
 	srand(time(NULL));
-	int PlayerNum, j, slot_no, i, random, temp;
-	struct Players Player[6];
+	int PlayerNum, j;
+	struct Players Player[6];	
+	int slot_no, i, random, temp;
 	struct Slots slot[20];
 
 	printf("Enter the number of players you want:"); //gives number of players
@@ -46,7 +49,7 @@ int main(void)
 	for(j=1; j<=temp; j++)
 	{
 		printf("\n\nEnter player name: ");
-		scanf("%s", Player[j].Name);
+		scanf("%s", &Player[j].Name);
 		getchar();
 		printf("\n%d\n", PlayerNum);
 		//this is messing up for some reason, a random number is getting assigned to PlayerNum 
@@ -93,22 +96,6 @@ int main(void)
 		}
 	}
 	
-	
-	for(i=1; i<=PlayerNum; i++)
-	{
-		printf("\ni is %d first loop", i);
-		assignPlace(&Player[i], &slot[i], PlayerNum, slot_no, &i);
-		for(j=1; j<i; j++)
-		{
-			if(Player[i].Place==Player[j].Place)
-			{
-				i--;
-				printf("\ni is %d inner loop", i);
-			}
-		}
-		printf("\ni is %d outer loop", i);
-	}
-	
 	for(i=1; i<=PlayerNum; i++)
 	{
 		printf("\n\nPlace P%d: %d\n", i, Player[i].Place);		//test if it's repeating
@@ -119,7 +106,7 @@ int main(void)
 	
 	
 	
-	return 0;
+return 0;
 }
 
 void type(struct Players *Player) //player type function
@@ -255,17 +242,116 @@ void attack(struct Players *Playera, struct Players *Playerb)		//change Playera/
 		Playerb->LifePoints=Playerb->LifePoints - 0.5*Playera->Strength;
 	}
 }
-
-
-void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, int SlotNumber, int *i)
+void boost(struct Players *Player, struct Slots *slot)
+	{
+		if(strcmp(slot->type, "Hill")==0)
+		{
+			if(Player->Dexterity >= 60)
+			{
+				Player->Strength = Player->Strength + 10;
+			}
+			if(Player->Dexterity < 50)
+			{
+				Player->Strength = Player->Strength - 10;
+			}
+		}
+		if(strcmp(slot->type, "City")==0)
+		{
+			if(Player->Smartness > 60)
+			{
+				Player->MagicSkills = Player->MagicSkills + 10;
+			}
+			if(Player->Smartness <= 50)
+			{
+				Player->Dexterity = Player->Dexterity - 10;
+			}
+		}
+		if(Player->MagicSkills > 100)
+		{
+			Player->MagicSkills = 100;
+		}
+		if(Player->Strength > 100)
+		{
+			Player->Strength = 100;
+		}
+		if(Player->Dexterity > 100)
+		{
+			Player->Dexterity = 100;
+		}
+		if(Player->Dexterity < 0)
+		{
+			Player->Dexterity = 0;
+		}
+		if(Player->Strength < 0)
+		{
+			Player->Strength = 0;
+		}
+	}
+void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, int SlotNumber)
 {
-	int random;
 	
-	//places players on slots
-	random=1+rand()%SlotNumber;
-	Player->Place = random;
+	/*
+	get the player1.place assigned an int between 1-slotNumber
+	assign player2 a place that isn't player1.place
+	continue with others
+	
+	match these numbers to the slots and place player name in
+	
+	
 } 
-
+*/}
+void move(struct Players *Player, int x, int num)
+{
+	int l=0, r=0, m=0, c;
+	while(l<num)
+	{
+		if(Player[x].Place+1==Player[l].Place)
+		{
+			printf("You can't move forward\n");
+			r=r+1;
+		}
+		if(Player[x].Place-1==Player[l].Place)
+		{
+			printf("You can't move backwards\n");
+			m=m+1;
+		}
+	}
+	if(r<1&&m<1)
+	{
+		printf("Enter 1 to move forward or 2 to move backwards\n");
+		scanf("%d", &c);
+		if(c==1)
+		{
+			Player[x].Place=Player[x].Place+1;
+		}
+		if(c==2)
+		{
+			Player[x].Place=Player[x].Place-1;
+		}
+	}
+	else if(r<1&&m>0)
+	{
+		printf("Enter 1 to move forward\n");
+		scanf("%d", &c);
+		if(c==1)
+		{
+			Player[x].Place=Player[x].Place+1;
+		}
+	}
+	else if(r>0&&m<1)
+	{
+		printf("Enter 2 to move backwards\n");
+		scanf("%d", &c);
+		if(c==2)
+		{
+			Player[x].Place=Player[x].Place-1;
+		}
+	}
+	else if(r>0&&m>0)
+	{
+		printf("You are unable to move\n");
+	}
+}
 //move or attack
 
 //move to slot section C
