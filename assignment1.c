@@ -27,7 +27,8 @@ void type(struct Players *Player);		//give player a type
 void stat(struct Players *Player);		//give player stats
 void selectNumSlots(int *slot_noPtr, int PlayerNumber);		//select number of slots
 void assignSlots(struct Slots *slot, int i);				//put ground type on slots
-void attack(struct Players *Playera, struct Players *Playerb);				//attack function
+void attack(struct Players *Playera, struct Players *Playerb);			//attack function
+void move(struct Players *Player, int x, int num);
 void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, int SlotNumber, int *i);	//place players on slots
 
 int main(void)
@@ -265,7 +266,58 @@ void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, i
 	random=1+rand()%SlotNumber;
 	Player->Place = random;
 } 
-
+void move(struct Players *Player, int x, int num)
+{
+	int l=0, r=0, m=0, c;
+	while(l<num)
+	{
+		if(Player[x].Place+1==Player[l].Place)
+		{
+			printf("You can't move forward\n");
+			r=r+1;
+		}
+		if(Player[x].Place-1==Player[l].Place)
+		{
+			printf("You can't move backwards\n");
+			m=m+1;
+		}
+	}
+	if(r<1&&m<1)
+	{
+		printf("Enter 1 to move forward or 2 to move backwards\n");
+		scanf("%d", &c);
+		if(c==1)
+		{
+			Player[x].Place=Player[x].Place+1;
+		}
+		if(c==2)
+		{
+			Player[x].Place=Player[x].Place-1;
+		}
+	}
+	else if(r<1&&m>0)
+	{
+		printf("Enter 1 to move forward\n");
+		scanf("%d", &c);
+		if(c==1)
+		{
+			Player[x].Place=Player[x].Place+1;
+		}
+	}
+	else if(r>0&&m<1)
+	{
+		printf("Enter 2 to move backwards\n");
+		scanf("%d", &c);
+		if(c==2)
+		{
+			Player[x].Place=Player[x].Place-1;
+		}
+	}
+	else if(r>0&&m>0)
+	{
+		printf("You are unable to move\n");
+	}
+}
 //move or attack
 
 //move to slot section C
