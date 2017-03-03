@@ -34,7 +34,7 @@ void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, i
 int main(void)
 {
 	srand(time(NULL));
-	int PlayerNum, j, slot_no, i, random, temp;
+	int PlayerNum, j, slot_no, i, random, temp, counter;
 	struct Players Player[6];
 	struct Slots slot[20];
 
@@ -44,20 +44,22 @@ int main(void)
 	
 	printf("\nplayer number is %d\n", PlayerNum);
 	temp=PlayerNum;
+	
 	for(j=1; j<=temp; j++)
 	{
 		printf("\n\nEnter player name: ");
 		scanf("%s", Player[j].Name);
 		getchar();
-		printf("\n%d\n", PlayerNum);
+//		printf("\n%d\n", PlayerNum);
 		//this is messing up for some reason, a random number is getting assigned to PlayerNum 
 		type(&Player[j]);
 		stat(&Player[j]);
 		printf( "\nPlayer [%d]: %s\nPlayer Type: %s\nStrength: %d\nMagic: %d\nDexterity: %d\nLuck: %d\nSmartness: %d\n", j, Player[j].Name, Player[j].Race, Player[j].Strength, Player[j].MagicSkills, Player[j].Dexterity, Player[j].Luck, Player[j].Smartness);
 	}
 	PlayerNum=temp;
-	printf("\n%d\n", PlayerNum);
+//	printf("\n%d\n", PlayerNum);
 	selectNumSlots(&slot_no, PlayerNum);		//function for calling selecting amount of slots
+
 	for(i=0; i<2; i++)
 	{		//checks conditions for slots size
 		if(slot_no<PlayerNum || slot_no>20)	
@@ -76,38 +78,16 @@ int main(void)
 	}
 	
 	
-	for(i=1; i<=PlayerNum; i++)			//places players on slots
-	{
-		random=1+rand()%slot_no;
-		if(i==1)
-		{
-			Player[i].Place = random;
-		}
-		for(j=1; j<i; j++)
-		{
-			Player[i].Place = random;
-			if(Player[i].Place==Player[j].Place)
-			{
-				i--;
-				break;
-			}
-		}
-	}
-	
-	
 	for(i=1; i<=PlayerNum; i++)
 	{
-		printf("\ni is %d first loop", i);
 		assignPlace(&Player[i], &slot[i], PlayerNum, slot_no, &i);
 		for(j=1; j<i; j++)
 		{
 			if(Player[i].Place==Player[j].Place)
 			{
 				i--;
-				printf("\ni is %d inner loop", i);
 			}
 		}
-		printf("\ni is %d outer loop", i);
 	}
 	
 	for(i=1; i<=PlayerNum; i++)
@@ -115,35 +95,60 @@ int main(void)
 		printf("\n\nPlace P%d: %d\n", i, Player[i].Place);		//test if it's repeating
 	}
 	
-	
+	//not finished
 	while(counter<playerNum)
 	{
+		counter=0;
 		for(i=1; i<=PlayerNum; i++)
 		{
 			//while all excempt one player life points is 0
 			//continue playing
 			//player[i] choice - move or attack
+			while(choice !='m' || choice !='a')
+			{
+				printf("\n%s do you want to move or attack?", Player[i].Name);
+				printf("\nHit m to move and a to attack");
+				scanf("%c", &choice);
+			}
 			//if move -> move function
+			if(choice=='m')
+			{
+				move(&Player, x, num);
+			}
 			//if attack -> attack function
+			if(choice=='a')
+			{
+				attack(&Playera, Players &Playerb);
+			}
 			//print stats after each player
-			
+			if(Player[i].LifePoints==0)
+			{
+				counter++;
+			}
 			//if a players lifepoints is 0 then player is dead doesn't get a turn
 			//if a player dies counter goes up but, resets to 0 every loop
+			for(j=1; j<=PlayerNum; j++)		//before or after move/attack
+			{
+				printf("\n%s (%s, %d)", Player[i].Name, Player[i].Race, Player[i].LifePoints);
+			}
 		}
 	}
-	
+	*/
 	return 0;
 }
 
 void type(struct Players *Player) //player type function
 {
 	char cho;
-	printf("Enter W for Wizard, O for Ogre, E for Elf or H for Human: \n");
-	scanf("%c", &cho);
-	getchar();
-	
-	printf("\n%c\n", cho);
-	
+	while(cho!='W')
+	{
+		printf("Enter W for Wizard, O for Ogre, E for Elf or H for Human: \n");
+		scanf("%c", &cho);
+		getchar();
+		printf("\n%c\n", cho);
+		if(cho =='W' || cho =='w' || cho =='H' || cho =='h' || cho =='E' || cho =='e' || cho =='O' || cho =='o')
+			break;
+	}
 	//while loop? for if they didn't choose right
 	
 	if(cho=='W' || cho=='w')
