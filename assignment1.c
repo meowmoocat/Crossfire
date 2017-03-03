@@ -116,9 +116,21 @@ int main(void)
 	}
 	
 	
-	
-	
-	
+	while(counter<playerNum)
+	{
+		for(i=1; i<=PlayerNum; i++)
+		{
+			//while all excempt one player life points is 0
+			//continue playing
+			//player[i] choice - move or attack
+			//if move -> move function
+			//if attack -> attack function
+			//print stats after each player
+			
+			//if a players lifepoints is 0 then player is dead doesn't get a turn
+			//if a player dies counter goes up but, resets to 0 every loop
+		}
+	}
 	
 	return 0;
 }
@@ -257,7 +269,6 @@ void attack(struct Players *Playera, struct Players *Playerb)		//change Playera/
 	}
 }
 
-
 void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, int SlotNumber, int *i)
 {
 	int random;
@@ -266,7 +277,8 @@ void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, i
 	random=1+rand()%SlotNumber;
 	Player->Place = random;
 } 
-void move(struct Players *Player, int x, int num)
+
+void move(struct Players *Player, int x, int num)		//call this	
 {
 	int l=0, r=0, m=0, c;
 	while(l<num)
