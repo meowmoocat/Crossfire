@@ -28,6 +28,7 @@ struct Players
 void type(struct Players *Player);
 void stat(struct Players *Player);
 void attack(struct Players *Playera, struct Players *Playerb);
+void boost(struct Players *Player, struct Slots *slot);
 void selectNumSlots(int *slot_noPtr, int PlayerNumber);
 void assignSlots(struct Slots *slot, int i);
 void assignPlace(struct Players Player, struct Slots slot, int PlayerNumber, int SlotNumber);
@@ -75,20 +76,19 @@ while(j<PlayerNum)
 	if(j==0)
 	{
 		printf("Enter player name: ");
-		scanf("%s", &Name);	//I think there's a problem with using fgets and scanf together, this still doesn't work
+		scanf("%s", &Name);	
 		strcpy(Player1.Name, Name);
 		printf( "Player 1: %s\n", Player1.Name);
-		type(&Player1);// fgets doesnt work here but works in the other iterations
+		type(&Player1);
 		stat(&Player1);	
 		printf( "\nPlayer 1: %s\nPlayer Type: %s\nStrength: %d\nMagic: %d\nDexterity: %d\nLuck: %d\nSmartness: %d\n", Player1.Name, Player1.Race, Player1.Strength, Player1.MagicSkills, Player1.Dexterity, Player1.Luck, Player1.Smartness);
 	}
 	else if(j==1)
 	{
 		printf("Enter player name: ");
-//		scanf("%s", &Player2.Name);
 		fgets (Player2.Name, 25, stdin);
 		printf( "Player 2: %s\n", Player2.Name);
-		type(&Player2);//This function cause the previous line to not work. I have no idea why. The same happens in each iteration
+		type(&Player2);
 		stat(&Player2);	
 		printf( "\nPlayer 2: %s\nPlayer Type: %s\nStrength: %d\nMagic: %d\nDexterity: %d\nLuck: %d\nSmartness: %d\n", Player2.Name, Player2.Race, Player2.Strength, Player2.MagicSkills, Player2.Dexterity, Player2.Luck, Player2.Smartness);
 	}
@@ -400,7 +400,57 @@ void attack(struct Players *Playera, struct Players *Playerb)
 			Playerb->LifePoints=Playerb->LifePoints - 0.5*Playera->Strength;
 		}
 }
-
+void boost(struct Players *Player, struct Slots *slot)
+	{
+		if(strcmp(slot->type, "Hill")==0)
+		{
+			if(Player->Dexterity >= 60)
+			{
+				Player->Strength = Player->Strength + 10;
+			}
+			if(Player->Dexterity < 50)
+			{
+				Player->Strength = Player->Strength - 10;
+			}
+		}
+		if(strcmp(slot->type, "City")==0)
+		{
+			if(Player->Smartness > 60)
+			{
+				Player->MagicSkills = Player->MagicSkills + 10;
+			}
+			if(Player->Smartness <= 50)
+			{
+				Player->Dexterity = Player->Dexterity - 10;
+			}
+		}
+		if(Player->MagicSkills > 100)
+		{
+			Player->MagicSkills = 100;
+		}
+		if(Player->Strength > 100)
+		{
+			Player->Strength = 100;
+		}
+		
+		if(Player->Dexterity > 100)
+		{
+			Player->Dexterity = 100;
+		}
+		
+		if(Player->Dexterity < 0)
+		{
+			Player->Dexterity = 0;
+		}
+		
+		if(Player->Strength < 0)
+		{
+			Player->Strength = 0;
+		}
+		
+		
+		
+	}
 /*void assignPlace(struct Players Player, struct Slots slot, int PlayerNumber, int SlotNumber)
 {
 	
