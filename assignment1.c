@@ -28,14 +28,13 @@ void stat(struct Players *Player);		//give player stats
 void selectNumSlots(int *slot_noPtr, int PlayerNumber);		//select number of slots
 void assignSlots(struct Slots *slot, int i);				//put ground type on slots
 void attack(struct Players *Playera, struct Players *Playerb);				//attack function
-//void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, int SlotNumber);	//place players on slots
+void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, int SlotNumber, int *i);	//place players on slots
 
 int main(void)
 {
 	srand(time(NULL));
-	int PlayerNum, j;
-	struct Players Player[6];	
-	int slot_no, i, random, temp;
+	int PlayerNum, j, slot_no, i, random, temp;
+	struct Players Player[6];
 	struct Slots slot[20];
 
 	printf("Enter the number of players you want:"); //gives number of players
@@ -47,7 +46,7 @@ int main(void)
 	for(j=1; j<=temp; j++)
 	{
 		printf("\n\nEnter player name: ");
-		scanf("%s", &Player[j].Name);
+		scanf("%s", Player[j].Name);
 		getchar();
 		printf("\n%d\n", PlayerNum);
 		//this is messing up for some reason, a random number is getting assigned to PlayerNum 
@@ -94,6 +93,22 @@ int main(void)
 		}
 	}
 	
+	
+	for(i=1; i<=PlayerNum; i++)
+	{
+		printf("\ni is %d first loop", i);
+		assignPlace(&Player[i], &slot[i], PlayerNum, slot_no, &i);
+		for(j=1; j<i; j++)
+		{
+			if(Player[i].Place==Player[j].Place)
+			{
+				i--;
+				printf("\ni is %d inner loop", i);
+			}
+		}
+		printf("\ni is %d outer loop", i);
+	}
+	
 	for(i=1; i<=PlayerNum; i++)
 	{
 		printf("\n\nPlace P%d: %d\n", i, Player[i].Place);		//test if it's repeating
@@ -104,7 +119,7 @@ int main(void)
 	
 	
 	
-return 0;
+	return 0;
 }
 
 void type(struct Players *Player) //player type function
@@ -242,19 +257,22 @@ void attack(struct Players *Playera, struct Players *Playerb)		//change Playera/
 }
 
 
-/*void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, int SlotNumber)
+void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, int SlotNumber, int *i)
 {
+	int random, j, k;
+	k = *i;
 	
-	/*
-	get the player1.place assigned an int between 1-slotNumber
-	assign player2 a place that isn't player1.place
-	continue with others
+//	for(i=1; i<=PlayerNumber; i++)			//places players on slots
+//	{
 	
-	match these numbers to the slots and place player name in
-	
+		random=1+rand()%SlotNumber;
+		
+		
+			Player->Place = random;
+			
 	
 } 
-*/
+
 //move or attack
 
 //move to slot section C
