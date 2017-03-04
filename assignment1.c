@@ -6,14 +6,14 @@
 struct Slots
 {
 	int place;
-	char type[10];
+	char type[7];
 	char player;
 	};
 
 struct Players
 {
    char  Name[25];
-   char  Race[25];
+   char  Race[7];
    int   Strength;
    int   MagicSkills;
    int	 Dexterity;
@@ -27,7 +27,7 @@ void type(struct Players *Player);		//give player a type
 void stat(struct Players *Player);		//give player stats
 void selectNumSlots(int *slot_noPtr, int PlayerNumber);		//select number of slots
 void assignSlots(struct Slots *slot, int i);				//put ground type on slots
-void attack(struct Players *Playera, struct Players *Playerb);			//attack function
+void attack(struct Players *attacker_Player, struct Players *attacked_Player);			//attack function
 void move(struct Players *Player, int x, int num);
 void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, int SlotNumber, int *i);	//place players on slots
 
@@ -38,6 +38,7 @@ int main(void)
 	struct Players Player[6];
 	struct Slots slot[20];
 
+	//pick between 2 and 6
 	printf("Enter the number of players you want:"); //gives number of players
 	scanf("%d", &PlayerNum);
 	getchar();
@@ -45,7 +46,7 @@ int main(void)
 	printf("\nplayer number is %d\n", PlayerNum);
 	temp=PlayerNum;
 	
-	for(j=1; j<=temp; j++)
+	for(j=0; j<temp; j++)
 	{
 		printf("\n\nEnter player name: ");
 		scanf("%s", Player[j].Name);
@@ -56,6 +57,7 @@ int main(void)
 		stat(&Player[j]);
 		printf( "\nPlayer [%d]: %s\nPlayer Type: %s\nStrength: %d\nMagic: %d\nDexterity: %d\nLuck: %d\nSmartness: %d\n", j, Player[j].Name, Player[j].Race, Player[j].Strength, Player[j].MagicSkills, Player[j].Dexterity, Player[j].Luck, Player[j].Smartness);
 	}
+	
 	PlayerNum=temp;
 //	printf("\n%d\n", PlayerNum);
 	selectNumSlots(&slot_no, PlayerNum);		//function for calling selecting amount of slots
@@ -71,17 +73,17 @@ int main(void)
 	}
 	
 	//calls function for placing random types on slots
-	for(i=1; i<=slot_no; i++)
+	for(i=0; i<slot_no; i++)
 	{
 		assignSlots(&slot[i], i);
 		printf("%d: %s\n", slot[i].place, slot[i].type);
 	}
 	
 	
-	for(i=1; i<=PlayerNum; i++)
+	for(i=0; i<PlayerNum; i++)
 	{
 		assignPlace(&Player[i], &slot[i], PlayerNum, slot_no, &i);
-		for(j=1; j<i; j++)
+		for(j=0; j<i; j++)
 		{
 			if(Player[i].Place==Player[j].Place)
 			{
@@ -90,13 +92,13 @@ int main(void)
 		}
 	}
 	
-	for(i=1; i<=PlayerNum; i++)
+	for(i=0; i<PlayerNum; i++)
 	{
-		printf("\n\nPlace P%d: %d\n", i, Player[i].Place);		//test if it's repeating
+		printf("\n\nPlace P%d: %d\n", i+1, Player[i].Place);		//test if it's repeating
 	}
 	
-	//not finished
-	while(counter<playerNum)
+/*	//not finished
+	while(counter<PlayerNum)
 	{
 		counter=0;
 		for(i=1; i<=PlayerNum; i++)
@@ -113,12 +115,13 @@ int main(void)
 			//if move -> move function
 			if(choice=='m')
 			{
-				move(&Player, x, num);
+				move(&Player[i], i, num);
 			}
 			//if attack -> attack function
 			if(choice=='a')
 			{
-				attack(&Playera, Players &Playerb);
+				//need to find out who the attacked player is
+				attack(&Player[i], &attacked_Player);
 			}
 			//print stats after each player
 			if(Player[i].LifePoints==0)
@@ -133,7 +136,7 @@ int main(void)
 			}
 		}
 	}
-	*/
+//	*/
 	return 0;
 }
 
@@ -244,7 +247,7 @@ void selectNumSlots(int *slot_noPtr, int PlayerNumber)	//function to select the 
 void assignSlots(struct Slots *slot, int i)		//slot ground type function
 {
 	int random=0;
-	slot->place=i;
+	slot->place=i+1;
 	random = 1+rand()%3;
 	if(random==1)
 	{
@@ -262,15 +265,15 @@ void assignSlots(struct Slots *slot, int i)		//slot ground type function
 	return;
 }
 
-void attack(struct Players *Playera, struct Players *Playerb)		//change Playera/b to attacker and attacked?
+void attack(struct Players *attacker_Player, struct Players *attacked_Player)		//change Playera/b to attacker and attacked?
 {
-	if(Playerb->Strength>70)
+	if(attacked_Player->Strength>70)
 	{
-		Playera->LifePoints=Playera->LifePoints - 0.3*Playerb->Strength;
+		attacker_Player->LifePoints=attacker_Player->LifePoints - 0.3*attacked_Player->Strength;
 	}
-	else if(Playerb->Strength<=70)
+	else if(attacked_Player->Strength<=70)
 	{
-		Playerb->LifePoints=Playerb->LifePoints - 0.5*Playera->Strength;
+		attacked_Player->LifePoints=attacked_Player->LifePoints - 0.5*attacker_Player->Strength;
 	}
 }
 
