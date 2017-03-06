@@ -7,8 +7,7 @@ struct Slots
 {
 	int place;
 	char type[7];
-	char player;
-	};
+};
 
 struct Players
 {
@@ -44,22 +43,21 @@ int main(void)
 	getchar();
 	
 	printf("\nplayer number is %d\n", PlayerNum);
-	temp=PlayerNum;
 	
-	for(j=0; j<temp; j++)
+	for(j=0; j<PlayerNum; j++)
 	{
 		printf("\n\nEnter player name: ");
-		scanf("%s", Player[j].Name);
-		getchar();
-//		printf("\n%d\n", PlayerNum);
+		fgets (Player[j].Name, 25, stdin);
+//		scanf("%s", Player[j].Name);
+//		getchar();
+		printf("\nPlayer number: %d\n", PlayerNum);
 		//this is messing up for some reason, a random number is getting assigned to PlayerNum 
 		type(&Player[j]);
 		stat(&Player[j]);
-		printf( "\nPlayer [%d]: %s\nPlayer Type: %s\nStrength: %d\nMagic: %d\nDexterity: %d\nLuck: %d\nSmartness: %d\n", j, Player[j].Name, Player[j].Race, Player[j].Strength, Player[j].MagicSkills, Player[j].Dexterity, Player[j].Luck, Player[j].Smartness);
+		printf( "\nPlayer [%d]: %s\nPlayer Type: %s\nStrength: %d\nMagic: %d\nDexterity: %d\nLuck: %d\nSmartness: %d\n", j+1, Player[j].Name, Player[j].Race, Player[j].Strength, Player[j].MagicSkills, Player[j].Dexterity, Player[j].Luck, Player[j].Smartness);
 	}
 	
-	PlayerNum=temp;
-//	printf("\n%d\n", PlayerNum);
+	printf("\nPlayer number: %d\n", PlayerNum);
 	selectNumSlots(&slot_no, PlayerNum);		//function for calling selecting amount of slots
 
 	for(i=0; i<2; i++)
@@ -142,7 +140,7 @@ int main(void)
 
 void type(struct Players *Player) //player type function
 {
-	char cho;
+	char cho='y';
 	while(cho!='W')
 	{
 		printf("Enter W for Wizard, O for Ogre, E for Elf or H for Human: \n");
@@ -338,6 +336,4 @@ void move(struct Players *Player, int x, int num)		//call this
 		printf("You are unable to move\n");
 	}
 }
-//move or attack
 
-//move to slot section C
