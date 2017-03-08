@@ -8,7 +8,7 @@ struct Slots
 	int place;
 	char type[10];
 	char player;
-	};
+};
 
 struct Players
 {
@@ -23,10 +23,10 @@ struct Players
    int	 Place;
 };
 
-void type(struct Players *Player);		//give player a type
-void stat(struct Players *Player);		//give player stats
-void selectNumSlots(int *slot_noPtr, int PlayerNumber);		//select number of slots
-void assignSlots(struct Slots *slot, int i);				//put ground type on slots
+void type(struct Players *Player);//give player a type
+void stat(struct Players *Player);//give player stats
+void selectNumSlots(int *slot_noPtr, int PlayerNumber);	//select number of slots
+void assignSlots(struct Slots *slot, int i);//put ground type on slots
 void attack(struct Players *Playera, struct Players *Playerb);			//attack function
 void move(struct Players *Player, int x, int num);
 void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, int SlotNumber, int *i);	//place players on slots
@@ -114,12 +114,6 @@ int main(void)
 	{
 		printf("\n\nPlace P%d: %d\n", i, Player[i].Place);		//test if it's repeating
 	}
-	
-	
-	
-	
-	
-	
 	return 0;
 }
 
@@ -207,7 +201,7 @@ void stat(struct Players *Player)		//player stat function
 	{
 		Player->Strength= 1+rand()%19; //needed to change
 		Player->MagicSkills= 80+rand()%20;
-		Player->Dexterity= 1+rand()%99;
+		Player->Dexterity= 1+rand()%100;
 		Player->Luck= 50+rand()%50;
 		Player->Smartness= 90+rand()%10;
 	}
@@ -256,8 +250,6 @@ void attack(struct Players *Playera, struct Players *Playerb)		//change Playera/
 		Playerb->LifePoints=Playerb->LifePoints - 0.5*Playera->Strength;
 	}
 }
-
-
 void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, int SlotNumber, int *i)
 {
 	int random;
