@@ -29,7 +29,7 @@ void stat(struct Players *Player);		//give player stats
 void selectNumSlots(int *slot_noPtr, int PlayerNumber);		//select number of slots
 void assignSlots(struct Slots *slot, int i);				//put ground type on slots
 void attack(struct Players *attacker, struct Players *attacked);			//attack function
-void move(struct Players *Player, int x, int playernumber);
+void move(struct Players *Player, int x, int playernumber, int slotnum);
 void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, int SlotNumber, int *i);	//place players on slots
 
 int main(void)
@@ -113,7 +113,7 @@ int main(void)
 		{
 			deboost(&Player[i], &slot[i]);
 			printf("\ndeboost");
-			move(&Player[i], i, PlayerNum);
+			move(&Player[i], i, PlayerNum, slot_no);
 			printf("\nmove");
 			boost(&Player[i], &slot[i]);
 			printf("boost");
@@ -327,22 +327,20 @@ void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, i
 	Player->Place = random;
 } 
 
-void move(struct Players *Player, int x, int playernumber)		//call this	
+void move(struct Players *Player, int x, int playernumber, int slotnum)		//call this	
 {
 	int l=0, r=0, m=0, c;
 	while(l<playernumber)
 	{
-		if(Player[x].Place+1==Player[l].Place)
+		if(Player[x].Place+1==Player[l].Place || (Player[x].Place==slotnum))
 		{
 			printf("You can't move forward\n");
 			r=r+1;
-			break;
 		}
-		if(Player[x].Place-1==Player[l].Place)
+		if(Player[x].Place-1==Player[l].Place || x==0)
 		{
 			printf("You can't move backwards\n");
 			m=m+1;
-			break;
 		}
 		l++;
 	}
