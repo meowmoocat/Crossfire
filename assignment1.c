@@ -95,46 +95,38 @@ int main(void)
 		printf("\n\nPlace P%d: %d\n", i+1, Player[i].Place);		//test if it's repeating
 	}
 	
-/*	//not finished
-	while(counter<PlayerNum)
+
+	for(i=0; i<PlayerNum; i++)
 	{
-		counter=0;
-		for(i=1; i<=PlayerNum; i++)
+		//while all excempt one player life points is 0
+		//continue playing
+		//player[i] choice - move or attack
+		while(choice !='m' || choice !='a')
 		{
-			//while all excempt one player life points is 0
-			//continue playing
-			//player[i] choice - move or attack
-			while(choice !='m' || choice !='a')
-			{
-				printf("\n%s do you want to move or attack?", Player[i].Name);
-				printf("\nHit m to move and a to attack");
-				scanf("%c", &choice);
-			}
-			//if move -> move function
-			if(choice=='m')
-			{
-				move(&Player[i], i, num);
-			}
-			//if attack -> attack function
-			if(choice=='a')
-			{
-				//need to find out who the attacked player is
-				attack(&Player[i], &attacked_Player);
-			}
-			//print stats after each player
-			if(Player[i].LifePoints==0)
-			{
-				counter++;
-			}
-			//if a players lifepoints is 0 then player is dead doesn't get a turn
-			//if a player dies counter goes up but, resets to 0 every loop
-			for(j=1; j<=PlayerNum; j++)		//before or after move/attack
-			{
-				printf("\n%s (%s, %d)", Player[i].Name, Player[i].Race, Player[i].LifePoints);
-			}
+			printf("\n%s do you want to move or attack?", Player[i].Name);
+			printf("\nHit m to move and a to attack");
+			scanf("%c", &choice);
+		}
+		//if move -> move function
+		if(choice=='m')
+		{
+			move(&Player[i], i, num);
+		}
+		//if attack -> attack function
+		if(choice=='a')
+		{
+			//need to find out who the attacked player is
+			attack(&Player[i], &attacked_Player);
+		}
+		//print stats after each player
+
+		//if a players lifepoints is 0 then player is dead doesn't get a turn
+		//if a player dies counter goes up but, resets to 0 every loop
+		for(j=1; j<=PlayerNum; j++)		//before or after move/attack
+		{
+			printf("\n%s (%s, %d)", Player[i].Name, Player[i].Race, Player[i].LifePoints);
 		}
 	}
-//	*/
 	return 0;
 }
 
