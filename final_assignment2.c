@@ -33,6 +33,7 @@ void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, i
 int main(void)
 {
 	srand(time(NULL));
+	char choice;
 	int PlayerNum, j, slot_no, i, random, temp, counter;
 	struct Players Player[6];
 	struct Slots slot[20];
@@ -115,6 +116,10 @@ int main(void)
 		//if attack -> attack function
 		if(choice=='a')
 		{
+			for(j=0; j<PlayerNum; j++)
+			{
+				
+			}
 			//need to find out who the attacked player is
 			attack(&Player[i], &attacked_Player);
 		}
@@ -122,7 +127,7 @@ int main(void)
 
 		//if a players lifepoints is 0 then player is dead doesn't get a turn
 		//if a player dies counter goes up but, resets to 0 every loop
-		for(j=1; j<=PlayerNum; j++)		//before or after move/attack
+		for(j=0; j<PlayerNum; j++)		//before or after move/attack
 		{
 			printf("\n%s (%s, %d)", Player[i].Name, Player[i].Race, Player[i].LifePoints);
 		}
