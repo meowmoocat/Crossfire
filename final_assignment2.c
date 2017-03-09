@@ -35,10 +35,8 @@ void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, i
 int main(void)
 {
 	srand(time(NULL));
-
-	char choice;
 	int PlayerNum, j, slot_no, i, random, temp, counter;
-	int max=100, v, second, r, k=0, l;
+	int max=100, v, second, r, k=0, l, dif, choice;
 	struct Players Player[6];
 	struct Slots slot[20];
 
@@ -106,59 +104,69 @@ int main(void)
 	{
 		
 		//player[i] choice - move or attack
-		printf("\n%sDo you want to move or attack?\nEnter m to move or a to attack\n", Player[i].Name);
-		scanf("%c", &choice);
-		getchar();
-		
-		//if move -> move function
-		if(choice=='m')
+		printf("\n%sDo you want to move or attack?\nEnter 1 to move or 2 to attack\n", Player[i].Name);
+		scanf("%d", &choice);
+		while(choice!=1 && choice!=2)
 		{
+			printf("Enter a valid number");
+			scanf("%d", &choice);
+		}
+		//if move -> move function
+		if(choice==1)
+		{
+			printf("Yes");
 			deboost(&Player[i], &slot[i]);
 			move(&Player[i], i, PlayerNum);
 			boost(&Player[i], &slot[i]);
 		}
 		//if attack -> attack function
-		if(choice=='a')
+		if(choice==2)
 		{
 			//need to find out who the attacked player is
 			
 			while(k<PlayerNum)
 			{
-				if(Player[i].Place-Player[k].Place<max && Player[i].Place-Player[k].Place>0)
+				dif=Player[i].Place-Player[k].Place;
+				if(dif<0)
+				{
+					dif=-(dif);
+				}
+				if(dif<max && dif>0)
 				{
 					v=k;
-					max=Player[k].Place;
+					max=dif;
 				}
-				else if(Player[i].Place-Player[k].Place==max)
+				else if(dif==max)
 				{
 					second=max;
-					r=Player[k].Place;
+					r=k;
 				}
 				k=k+1;
 			}
 		}
-		if(choice=='a')
+		if(choice==2)
 		{
 			if(max!=second)
 			{
-				attack(&Player[i], &Player[max]);
+				printf("%d", Player[i].LifePoints);
+				attack(&Player[i], &Player[v]);
 			}
 			if(max==second)
 			{
-				printf("Enter 1 to attack player %d or 2 to attack player %d: \n", second, max);
+				printf("Enter 1 to attack player %d or 2 to attack player %d: \n", r, v);
 				scanf("%d", &l);
-				while(l!=1 || l!=2)
+				while(l!=1 && l!=2)
 				{
 					printf("Please enter a valid number: \n");
 					scanf("%d", &l);
 				}
 				if(l==1)
 				{
-					attack(&Player[i], &Player[second]);
+					attack(&Player[i], &Player[r]);
 				}
 				if(l==2)
 				{
-					attack(&Player[i], &Player[max]);
+					attack(&Player[i], &Player[v]);
 				}
 			}
 		}
@@ -304,11 +312,11 @@ void attack(struct Players *attacker, struct Players *attacked)		//change Player
 {
 	if(attacked->Strength>70)
 	{
-		attacker->LifePoints=attacker->LifePoints - 0.3*attacked->Strength;
+		attacker->LifePoints=attacker->LifePoints - (0.3*attacked->Strength);
 	}
-	else if(attacked->Strength<=70)
+	if(attacked->Strength<=70)
 	{
-		attacked->LifePoints=attacked->LifePoints - 0.5*attacker->Strength;
+		attacked->LifePoints=attacked->LifePoints - (0.5*attacker->Strength);
 	}
 }
 
@@ -323,20 +331,32 @@ void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, i
 
 void move(struct Players *Player, int x, int num)		//call this	
 {
-	int l=0, r=0, m=0, c;
+	int l=0, r=0, m=0, c=0, g, f;
+	
 	while(l<num)
 	{
-		if(Player[x].Place+1==Player[l].Place)
+		if(Player[x].Place+1==Player[l].Place || Player[x].Place==num)
 		{
-			printf("You can't move forward\n");
+			
 			r=r+1;
 		}
-		if(Player[x].Place-1==Player[l].Place)
+		if(Player[x].Place-1==Player[l].Place || Player[x].Place==1)
 		{
-			printf("You can't move backwards\n");
+			
 			m=m+1;
+			
 		}
+		l=l+1;
 	}
+	if(m>0)
+	{
+	printf("You can't move backwards\n");
+	}
+	if(r>0)
+	{
+	printf("You can't move fowards\n");
+	}
+	
 	if(r<1&&m<1)
 	{
 		printf("Enter 1 to move forward or 2 to move backwards\n");
