@@ -22,8 +22,8 @@ struct Players
    int	 Place;
 };
 
-void boost(struct Players *Player, struct Slots *slot);
-void deboost(struct Players *Player, struct Slots *slot);
+void boost(struct Players *Player);
+void deboost(struct Players *Player);
 void type(struct Players *Player);		//give player a type
 void stat(struct Players *Player);		//give player stats
 void selectNumSlots(int *slot_noPtr, int PlayerNumber);		//select number of slots
@@ -111,11 +111,11 @@ int main(void)
 		//if move -> move function
 		if(choice=='m')
 		{
-			deboost(&Player[i], &slot[i]);
+			deboost(&Player[i]);
 			printf("\ndeboost");
 			move(&Player[i], i, PlayerNum, slot_no);
 			printf("\nmove");
-			boost(&Player[i], &slot[i]);
+			boost(&Player[i]);
 			printf("boost");
 		}
 		//if attack -> attack function
@@ -123,7 +123,7 @@ int main(void)
 		{
 			//need to find out who the attacked player is
 			
-			while(k<PlayerNum)
+/*			while(k<PlayerNum)
 			{
 				if(i!=k)
 				{
@@ -133,7 +133,7 @@ int main(void)
 						v=k;
 						max=Player[k].Place;
 					}
-				}
+				
 				else if(Player[i].Place-Player[k].Place==max)
 				{
 					printf("\nfuck attack else if\n");
@@ -141,10 +141,9 @@ int main(void)
 					r=Player[k].Place;
 				}
 				k=k+1;
+				}
 			}
-		}
-		if(choice=='a')
-		{
+		
 			if(max!=second)
 			{
 				attack(&Player[i], &Player[max]);
@@ -167,7 +166,17 @@ int main(void)
 					attack(&Player[i], &Player[max]);
 				}
 			}
+			*/
+			unsigned int prox;
+			for(j=0; j<PlayerNum; j++)
+			{
+				int left = player.Place[i]-1;
+				int right = player.Place[i]+1;
+				if(left == player.Place[j])
+			}
+			
 		}
+			
 		//print stats after each player
 
 		//if a players lifepoints is 0 then player is dead doesn't get a turn
@@ -175,9 +184,11 @@ int main(void)
 	
 	}
 	for(j=0; j<PlayerNum; j++)		//before or after move/attack
-		{
-			printf("\n%s(%s, %d) %d\n", Player[j].Name, Player[j].Race, Player[j].LifePoints, Player[j].Place);
-		}
+	{
+		printf("\n%s(%s, %d) %d\n", Player[j].Name, Player[j].Race, Player[j].LifePoints, Player[j].Place);
+	}
+		
+		
 	return 0;
 }
 
@@ -380,93 +391,93 @@ void move(struct Players *Player, int x, int playernumber, int slotnum)		//call 
 		printf("You are unable to move\n");
 	}
 }
- void boost(struct Players *Player, struct Slots *slot)
+ void boost(struct Players *Player)
+{
+	if(strcmp(slot->type, "Hill")==0)
 	{
-		if(strcmp(slot->type, "Hill")==0)
+		if(Player->Dexterity >= 60)
 		{
-			if(Player->Dexterity >= 60)
-			{
-				Player->Strength = Player->Strength + 10;
-			}
-			if(Player->Dexterity < 50)
-			{
-				Player->Strength = Player->Strength - 10;
-			}
+			Player->Strength = Player->Strength + 10;
 		}
-		if(strcmp(slot->type, "City")==0)
+		if(Player->Dexterity < 50)
 		{
-			if(Player->Smartness > 60)
-			{
-				Player->MagicSkills = Player->MagicSkills + 10;
-			}
-			if(Player->Smartness <= 50)
-			{
-				Player->Dexterity = Player->Dexterity - 10;
-			}
-		}
-		if(Player->MagicSkills > 100)
-		{
-			Player->MagicSkills = 100;
-		}
-		if(Player->Strength > 100)
-		{
-			Player->Strength = 100;
-		}
-		if(Player->Dexterity > 100)
-		{
-			Player->Dexterity = 100;
-		}
-		if(Player->Dexterity < 0)
-		{
-			Player->Dexterity = 0;
-		}
-		if(Player->Strength < 0)
-		{
-			Player->Strength = 0;
+			Player->Strength = Player->Strength - 10;
 		}
 	}
-	void deboost(struct Players *Player, struct Slots *slot)
+	if(strcmp(slot->type, "City")==0)
 	{
-		if(strcmp(slot->type, "Hill")==0)
+		if(Player->Smartness > 60)
 		{
-			if(Player->Dexterity >= 60)
-			{
-				Player->Strength = Player->Strength - 10;
-			}
-			if(Player->Dexterity < 50)
-			{
-				Player->Strength = Player->Strength + 10;
-			}
+			Player->MagicSkills = Player->MagicSkills + 10;
 		}
-		if(strcmp(slot->type, "City")==0)
+		if(Player->Smartness <= 50)
 		{
-			if(Player->Smartness > 60)
-			{
-				Player->MagicSkills = Player->MagicSkills - 10;
-			}
-			if(Player->Smartness <= 50)
-			{
-				Player->Dexterity = Player->Dexterity + 10;
-			}
-		}
-		if(Player->MagicSkills > 100)
-		{
-			Player->MagicSkills = 100;
-		}
-		if(Player->Strength > 100)
-		{
-			Player->Strength = 100;
-		}
-		if(Player->Dexterity > 100)
-		{
-			Player->Dexterity = 100;
-		}
-		if(Player->Dexterity < 0)
-		{
-			Player->Dexterity = 0;
-		}
-		if(Player->Strength < 0)
-		{
-			Player->Strength = 0;
+			Player->Dexterity = Player->Dexterity - 10;
 		}
 	}
+	if(Player->MagicSkills > 100)
+	{
+		Player->MagicSkills = 100;
+	}
+	if(Player->Strength > 100)
+	{
+		Player->Strength = 100;
+	}
+	if(Player->Dexterity > 100)
+	{
+		Player->Dexterity = 100;
+	}
+	if(Player->Dexterity < 0)
+	{
+		Player->Dexterity = 0;
+	}
+	if(Player->Strength < 0)
+	{
+		Player->Strength = 0;
+	}
+}
+void deboost(struct Players *Player)
+{
+	if(strcmp(slot->type, "Hill")==0)
+	{
+		if(Player->Dexterity >= 60)
+		{
+			Player->Strength = Player->Strength - 10;
+		}
+		if(Player->Dexterity < 50)
+		{
+			Player->Strength = Player->Strength + 10;
+		}
+	}
+	if(strcmp(slot->type, "City")==0)
+	{
+		if(Player->Smartness > 60)
+		{
+			Player->MagicSkills = Player->MagicSkills - 10;
+		}
+		if(Player->Smartness <= 50)
+		{
+			Player->Dexterity = Player->Dexterity + 10;
+		}
+	}
+	if(Player->MagicSkills > 100)
+	{
+		Player->MagicSkills = 100;
+	}
+	if(Player->Strength > 100)
+	{
+		Player->Strength = 100;
+	}
+	if(Player->Dexterity > 100)
+	{
+		Player->Dexterity = 100;
+	}
+	if(Player->Dexterity < 0)
+	{
+		Player->Dexterity = 0;
+	}
+	if(Player->Strength < 0)
+	{
+		Player->Strength = 0;
+	}
+}
