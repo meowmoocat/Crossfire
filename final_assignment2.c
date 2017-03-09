@@ -29,7 +29,7 @@ void stat(struct Players *Player);		//give player stats
 void selectNumSlots(int *slot_noPtr, int PlayerNumber);		//select number of slots
 void assignSlots(struct Slots *slot, int i);				//put ground type on slots
 void attack(struct Players *attacker, struct Players *attacked);			//attack function
-void move(struct Players *Player, int x, int num);
+void move(struct Players *Player, int x, int playernumber, int slotnum);
 void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, int SlotNumber, int *i);	//place players on slots
 
 int main(void)
@@ -47,14 +47,11 @@ int main(void)
 	
 	printf("\nplayer number is %d\n", PlayerNum);
 	
-	for(j=0; j<PlayerNum; j++)
+	for(j=0; j<PlayerNum; j++)	//player name/type/stat
 	{
 		printf("\n\nEnter player name: ");
 		fgets (Player[j].Name, 25, stdin);
-//		scanf("%s", Player[j].Name);
-//		getchar();
 		printf("\nPlayer number: %d\n", PlayerNum);
-		//this is messing up for some reason, a random number is getting assigned to PlayerNum 
 		type(&Player[j]);
 		stat(&Player[j]);
 		printf( "\nPlayer [%d]: %s\nPlayer Type: %s\nStrength: %d\nMagic: %d\nDexterity: %d\nLuck: %d\nSmartness: %d\n", j+1, Player[j].Name, Player[j].Race, Player[j].Strength, Player[j].MagicSkills, Player[j].Dexterity, Player[j].Luck, Player[j].Smartness);
@@ -63,7 +60,7 @@ int main(void)
 	printf("\nPlayer number: %d\n", PlayerNum);
 	selectNumSlots(&slot_no, PlayerNum);		//function for calling selecting amount of slots
 
-	for(i=0; i<2; i++)
+	for(i=0; i<2; i++)	//selecting slots
 	{		//checks conditions for slots size
 		if(slot_no<PlayerNum || slot_no>20)	
 		{
@@ -74,7 +71,7 @@ int main(void)
 	}
 	
 	//calls function for placing random types on slots
-	for(i=0; i<slot_no; i++)
+	for(i=0; i<slot_no; i++)		
 	{
 		assignSlots(&slot[i], i);
 		printf("%d: %s\n", slot[i].place, slot[i].type);
@@ -100,7 +97,8 @@ int main(void)
 	}
 	
 
-	for(i=0; i<PlayerNum; i++)
+	for(i=0; i<PlayerNum; i++) //move or attack
+
 	{
 		
 		//player[i] choice - move or attack
@@ -116,8 +114,11 @@ int main(void)
 		{
 			printf("Yes");
 			deboost(&Player[i], &slot[i]);
-			move(&Player[i], i, PlayerNum);
+			printf("\ndeboost");
+			move(&Player[i], i, PlayerNum, slot_no);
+			printf("\nmove");
 			boost(&Player[i], &slot[i]);
+			printf("boost");
 		}
 		//if attack -> attack function
 		if(choice==2)
@@ -126,6 +127,7 @@ int main(void)
 			
 			while(k<PlayerNum)
 			{
+<<<<<<< HEAD
 				dif=Player[i].Place-Player[k].Place;
 				if(dif<0)
 				{
@@ -135,9 +137,20 @@ int main(void)
 				{
 					v=k;
 					max=dif;
+=======
+				if(i!=k)
+				{
+					if(Player[i].Place-Player[k].Place<max && Player[i].Place-Player[k].Place>0)
+					{
+						printf("\nfuck attack if\n");
+						v=k;
+						max=Player[k].Place;
+					}
+>>>>>>> b07acea9351e65f6bab61ebea5fcaa87c5764f8a
 				}
 				else if(dif==max)
 				{
+					printf("\nfuck attack else if\n");
 					second=max;
 					r=k;
 				}
@@ -178,7 +191,7 @@ int main(void)
 	}
 	for(j=0; j<PlayerNum; j++)		//before or after move/attack
 		{
-			printf("\n%s (%s, %d) %d", Player[j].Name, Player[j].Race, Player[j].LifePoints, Player[j].Place);
+			printf("\n%s(%s, %d) %d\n", Player[j].Name, Player[j].Race, Player[j].LifePoints, Player[j].Place);
 		}
 	return 0;
 }
@@ -329,23 +342,35 @@ void assignPlace(struct Players *Player, struct Slots *slot, int PlayerNumber, i
 	Player->Place = random;
 } 
 
-void move(struct Players *Player, int x, int num)		//call this	
+void move(struct Players *Player, int x, int playernumber, int slotnum)		//call this	
 {
+<<<<<<< HEAD
 	int l=0, r=0, m=0, c=0, g, f;
 	
 	while(l<num)
 	{
 		if(Player[x].Place+1==Player[l].Place || Player[x].Place==num)
+=======
+	int l=0, r=0, m=0, c;
+	while(l<playernumber)
+	{
+		if(Player[x].Place+1==Player[l].Place || (Player[x].Place==slotnum))
+>>>>>>> b07acea9351e65f6bab61ebea5fcaa87c5764f8a
 		{
 			
 			r=r+1;
 		}
+<<<<<<< HEAD
 		if(Player[x].Place-1==Player[l].Place || Player[x].Place==1)
+=======
+		if(Player[x].Place-1==Player[l].Place || x==0)
+>>>>>>> b07acea9351e65f6bab61ebea5fcaa87c5764f8a
 		{
 			
 			m=m+1;
 			
 		}
+<<<<<<< HEAD
 		l=l+1;
 	}
 	if(m>0)
@@ -355,6 +380,9 @@ void move(struct Players *Player, int x, int num)		//call this
 	if(r>0)
 	{
 	printf("You can't move fowards\n");
+=======
+		l++;
+>>>>>>> b07acea9351e65f6bab61ebea5fcaa87c5764f8a
 	}
 	
 	if(r<1&&m<1)
