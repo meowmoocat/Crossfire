@@ -36,7 +36,7 @@ int main(void)
 {
 	srand(time(NULL));
 	int PlayerNum, j, slot_no, i, random, temp, counter;
-	int max=100, v, second, r, k=0, l, dif, choice;
+	int max=100, v=0, second=99, r=0, k=0, l, dif, choice;
 	struct Players Player[6];
 	struct Slots slot[20];
 
@@ -123,7 +123,7 @@ int main(void)
 		if(choice==2)
 		{
 			//need to find out who the attacked player is
-			
+			max=100, second=99;
 			while(k<PlayerNum)
 			{
 				dif=Player[i].Place-Player[k].Place;
@@ -135,6 +135,7 @@ int main(void)
 				{
 					v=k;
 					max=dif;
+					printf("%d ", max);
 				}
 				else if(dif==max)
 				{
@@ -153,7 +154,7 @@ int main(void)
 			}
 			if(max==second)
 			{
-				printf("Enter 1 to attack player %d or 2 to attack player %d: \n", r, v);
+				printf("Enter 1 to attack player %d or 2 to attack player %d: \n", r+1, v+1);
 				scanf("%d", &l);
 				while(l!=1 && l!=2)
 				{
@@ -180,6 +181,7 @@ int main(void)
 		{
 			printf("\n%s (%s, %d) %d", Player[j].Name, Player[j].Race, Player[j].LifePoints, Player[j].Place);
 		}
+		printf("%d, %d", max, second);
 	return 0;
 }
 
@@ -314,7 +316,7 @@ void attack(struct Players *attacker, struct Players *attacked)		//change Player
 	{
 		attacker->LifePoints=attacker->LifePoints - (0.3*attacked->Strength);
 	}
-	if(attacked->Strength<=70)
+	else if(attacked->Strength<=70)
 	{
 		attacked->LifePoints=attacked->LifePoints - (0.5*attacker->Strength);
 	}
