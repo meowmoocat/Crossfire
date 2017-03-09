@@ -123,9 +123,10 @@ int main(void)
 		if(choice==2)
 		{
 			//need to find out who the attacked player is
-			max=100, second=99;
+			max=100, second=99, k=0;
 			while(k<PlayerNum)
 			{
+				
 				dif=Player[i].Place-Player[k].Place;
 				if(dif<0)
 				{
@@ -135,7 +136,7 @@ int main(void)
 				{
 					v=k;
 					max=dif;
-					printf("%d ", max);
+					
 				}
 				else if(dif==max)
 				{
@@ -144,13 +145,11 @@ int main(void)
 				}
 				k=k+1;
 			}
-		}
-		if(choice==2)
-		{
 			if(max!=second)
 			{
-				printf("%d", Player[i].LifePoints);
+				printf("\nlife points%d %d", Player[i].LifePoints, Player[v].LifePoints);
 				attack(&Player[i], &Player[v]);
+				printf("\nlife points%d %d", Player[i].LifePoints, Player[v].LifePoints);
 			}
 			if(max==second)
 			{
@@ -163,25 +162,31 @@ int main(void)
 				}
 				if(l==1)
 				{
+					printf("\nlife points%d %d", Player[i].LifePoints, Player[r].LifePoints);
 					attack(&Player[i], &Player[r]);
+					printf("\nlife points%d %d", Player[i].LifePoints, Player[r].LifePoints);
 				}
 				if(l==2)
 				{
+					printf("\nlife points%d %d", Player[i].LifePoints, Player[v].LifePoints);
 					attack(&Player[i], &Player[v]);
+					printf("\nlife points%d %d", Player[i].LifePoints, Player[v].LifePoints);
 				}
-			}
 		}
+		}
+	
+		
+			
+			
+		
 		//print stats after each player
-
-		//if a players lifepoints is 0 then player is dead doesn't get a turn
-		//if a player dies counter goes up but, resets to 0 every loop
 	
 	}
 	for(j=0; j<PlayerNum; j++)		//before or after move/attack
 		{
 			printf("\n%s (%s, %d) %d", Player[j].Name, Player[j].Race, Player[j].LifePoints, Player[j].Place);
 		}
-		printf("%d, %d", max, second);
+		printf("\n max = %d, second = %d, diff = %d", max, second, dif);
 	return 0;
 }
 
@@ -314,11 +319,11 @@ void attack(struct Players *attacker, struct Players *attacked)		//change Player
 {
 	if(attacked->Strength>70)
 	{
-		attacker->LifePoints=attacker->LifePoints - (0.3*attacked->Strength);
+		attacker->LifePoints=attacker->LifePoints - ((0.3)*(attacked->Strength));
 	}
 	else if(attacked->Strength<=70)
 	{
-		attacked->LifePoints=attacked->LifePoints - (0.5*attacker->Strength);
+		attacked->LifePoints=attacked->LifePoints - ((0.5)*(attacker->Strength));
 	}
 }
 
