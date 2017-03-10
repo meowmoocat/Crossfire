@@ -174,13 +174,7 @@ int main(void)
 				}
 		}
 		}
-	
-		
-			
-			
-		
 		//print stats after each player
-	
 	}
 	for(j=0; j<PlayerNum; j++)		//before or after move/attack
 		{
