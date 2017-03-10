@@ -36,7 +36,7 @@ int main(void)
 {
 	srand(time(NULL));
 
-	int PlayerNum, j, slot_no, i, choice, max, v=0, second, r=0, k, l, dif;
+	int PlayerNum, j, slot_no, i, choice, max, v=0, second, r=0, k, l, dif, counter=0;
 	struct Players Player[6];
 	struct Slots slot[20];
 
@@ -95,15 +95,28 @@ int main(void)
 		boost(&Player[i], &slot[Player[i].Place-1]);		//boosts are assigned to players if they are on hill or city, it's player.Place-1 because
 	}														//display starts at 1 while the struct arrays start at 0
 
-	for(i=0; i<PlayerNum; i++)		//print out player place
+	for(j=0; j<slot_no; j++)	//prints out player positions
 	{
-		printf("\nPlace P%d: %d\n", i+1, Player[i].Place);
+		for(k=0; k<PlayerNum; k++)
+		{
+			if(slot[j].place==Player[k].Place)
+			{
+				printf("P%d   ", k+1);
+			}
+			else
+			{
+				counter++;
+			}
+			if(counter==PlayerNum)
+			{
+				printf("_   ");
+			}
+		}
+		counter=0;
 	}
-
 
 	for(i=0; i<PlayerNum; i++) //move or attack
 	{
-
 		//player[i] choice - move or attack
 		printf("\n%sDo you want to move or attack?\nEnter 1 to move or 2 to attack\n", Player[i].Name);
 		scanf("%d", &choice);
@@ -181,11 +194,30 @@ int main(void)
 		//print stats after each player
 		for(j=0; j<PlayerNum; j++)
 		{
-			printf("\n%s(%s, %d)\n", Player[j].Name, Player[j].Race, Player[j].LifePoints);
+			printf("\nP%d:%s(%s, %d)\n", j+1, Player[j].Name, Player[j].Race, Player[j].LifePoints);
 		}
 		printf("\n");
+		
+		for(j=0; j<slot_no; j++)
+		{
+			for(k=0; k<PlayerNum; k++)
+			{
+				if(slot[j].place==Player[k].Place)
+				{
+					printf("P%d   ", k+1);
+				}
+				else
+				{
+					counter++;
+				}
+				if(counter==PlayerNum)
+				{
+					printf("_   ");
+				}
+			}
+			counter=0;
+		}
 	}
-
 	return 0;
 }
 
