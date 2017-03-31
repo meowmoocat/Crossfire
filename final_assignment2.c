@@ -36,7 +36,7 @@ int main(void)
 {
 	srand(time(NULL));
 
-	int PlayerNum, j, slot_no, i, choice, max, v=0, second, r=0, k, l, dif, counter=0;
+	int PlayerNum, j, slot_no, i, choice, max, v=0, second, r=0, k, l, dif, counter=0, atk=0;
 	struct Players Player[6];
 	struct Slots slot[20];
 
@@ -141,9 +141,30 @@ int main(void)
 		//if attack -> attack function
 		if(choice==2)
 		{
+			if(Player[i].Smartness+Player[i].MagicSkills>150)
+			{
+				printf("Enter 1 for a near attack, 2 for a distant attack or 3 for a magic attack:");
+				scanf("%d", &atk);
+				while(atk!=1 || atk!=2 || atk!=3)
+				{
+					printf("That is not a valid input. \nEnter 1 for a near attack, 2 for a distant attack or 3 for a magic attack:");
+					scanf("%d", &attack);
+				}
+			}
+			else
+			{
+				printf("Enter 1 for a near attack or 2 for a distant attack:");
+				scanf("%d", &atk);
+				while(atk!=1 || atk!=2)
+				{
+					printf("That is not a valid input. \nEnter 1 for a near attack or 2 for a distant attack:");
+					scanf("%d", &atk);
+				}
+			}
 			//need to find out who the attacked player is
 			max=100, second=99, k=0;
-
+			if(atk==1)
+			{
 			while(k<PlayerNum)		//checks for the closest player
 			{
 				dif=Player[i].Place-Player[k].Place;
@@ -190,6 +211,7 @@ int main(void)
 					attack(&Player[i], &Player[v]);
 				}
 			}
+		}
 		}
 		//print stats after each player
 		for(j=0; j<PlayerNum; j++)
@@ -529,4 +551,18 @@ void deboost(struct Players *Player, struct Slots *slot)	//when moving off a slo
 	{
 		Player->Strength = 0;
 	}
+}
+void disattack(struct Players *attacker, struct Players *attacked)		//distant attack function
+{
+	if(attacked->Dexterity>=attacker->Dexterity)
+	{						
+	}
+	else if(attacker->Dexterity>attacked->Dexterity)	//If the dexterity points of the attacked player are greater than the attacked players dexterity 
+	{								//the attacker life points = life points - 0.3 * (attacker player’s strength points).
+		attacked->LifePoints=attacked->LifePoints - (0.3*attacker->Strength);
+	}
+}
+void magattack(struct Players *attacker, struct Players *attacked)		//magic attack function
+{
+	attacked->LifePoints=attacked->LifePoints - ((0.3*attacker->MagicSkills)+(0.2*attacker->Smartness));
 }
